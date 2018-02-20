@@ -38,6 +38,7 @@ import com.stfalcon.chatkit.utils.DateFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +69,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     private MessagesListStyle messagesListStyle;
     private DateFormatter.Formatter dateHeadersFormatter;
     private SparseArray<OnMessageViewClickListener> viewClickListenersArray = new SparseArray<>();
+
+    public void sort(Comparator<Wrapper> comparator) {
+        Collections.sort(items, comparator);
+    }
 
     /**
      * For default list item layout and view holder.
@@ -693,6 +698,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
 
         Wrapper(DATA item) {
             this.item = item;
+        }
+
+        public DATA getItem() {
+            return item;
         }
     }
 
