@@ -192,7 +192,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
             if (!items.isEmpty()) {
                 int lastItemPosition = items.size() - 2;
 
-                if (items.size() >= lastItemPosition) {
+                if (lastItemPosition > 0 && items.size() > lastItemPosition) {
                     Object object = items.get(lastItemPosition).item;
                     if (object instanceof Date) {
                         Date lastItem = (Date) object;
