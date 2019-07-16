@@ -12,7 +12,7 @@
 
     <android.support.v4.widget.Space
         android:id="@id/emoticonButtonSpace"
-        android:layout_width="0dp"
+        android:layout_width="4dp"
         android:layout_height="0dp"
         android:layout_toEndOf="@id/emoticonButton"
         android:layout_toRightOf="@id/emoticonButton" />
@@ -27,37 +27,47 @@
 
     <android.support.v4.widget.Space
         android:id="@id/attachmentButtonSpace"
-        android:layout_width="0dp"
+        android:layout_width="8dp"
         android:layout_height="0dp"
         android:layout_toEndOf="@id/attachmentButton"
         android:layout_toRightOf="@id/attachmentButton" />
 
-    <com.vanniktech.emoji.EmojiEditText
-        android:id="@id/messageInput"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_centerVertical="true"
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="36dp"
         android:layout_toEndOf="@id/attachmentButtonSpace"
-        android:layout_toLeftOf="@id/sendButtonSpace"
         android:layout_toRightOf="@id/attachmentButtonSpace"
-        android:layout_toStartOf="@id/sendButtonSpace"
-        android:padding="0dp"
-        android:inputType="textAutoCorrect|textAutoComplete|textMultiLine|textCapSentences"/>
+        android:background="@drawable/rounded_corners">
 
-    <android.support.v4.widget.Space
-        android:id="@id/sendButtonSpace"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_toLeftOf="@id/messageSendButton"
-        android:layout_toStartOf="@id/messageSendButton"/>
+        <com.vanniktech.emoji.EmojiEditText
+            android:id="@id/messageInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"
+            android:layout_centerVertical="true"
+            android:padding="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="74dp"
+            android:layout_marginEnd="74dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:inputType="textAutoCorrect|textAutoComplete|textMultiLine|textCapSentences"/>
 
-    <Button
-        android:id="@id/messageSendButton"
-        android:layout_width="60dp"
-        android:layout_height="28dp"
-        android:textSize="12sp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
+        <Button
+            android:id="@id/messageSendButton"
+            android:layout_width="60dp"
+            android:layout_height="28dp"
+            android:textSize="12sp"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
 
 </merge>

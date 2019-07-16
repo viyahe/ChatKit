@@ -62,11 +62,9 @@ class MessageInputStyle extends Style {
 
     private int attachmentButtonWidth;
     private int attachmentButtonHeight;
-    private int attachmentButtonMargin;
 
     private int emoticonButtonWidth;
     private int emoticonButtonHeight;
-    private int emoticonButtonMargin;
 
     private int inputButtonBackground;
     private int inputButtonDefaultBgColor;
@@ -80,7 +78,6 @@ class MessageInputStyle extends Style {
 
     private int inputButtonWidth;
     private int inputButtonHeight;
-    private int inputButtonMargin;
 
     private int inputMaxLines;
     private String inputHint;
@@ -141,11 +138,9 @@ class MessageInputStyle extends Style {
 
         style.attachmentButtonWidth = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonWidth, style.getDimension(R.dimen.input_button_width));
         style.attachmentButtonHeight = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonHeight, style.getDimension(R.dimen.input_button_height));
-        style.attachmentButtonMargin = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonMargin, style.getDimension(R.dimen.input_button_margin));
 
         style.emoticonButtonWidth = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonWidth, style.getDimension(R.dimen.input_button_width));
         style.emoticonButtonHeight = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonHeight, style.getDimension(R.dimen.input_button_height));
-        style.emoticonButtonMargin = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonMargin, style.getDimension(R.dimen.input_button_margin));
 
         style.inputButtonBackground = typedArray.getResourceId(R.styleable.MessageInput_inputButtonBackground, -1);
         style.inputButtonDefaultBgColor = typedArray.getColor(R.styleable.MessageInput_inputButtonDefaultBgColor,
@@ -165,7 +160,6 @@ class MessageInputStyle extends Style {
 
         style.inputButtonWidth = typedArray.getDimensionPixelSize(R.styleable.MessageInput_inputButtonWidth, style.getDimension(R.dimen.input_button_width));
         style.inputButtonHeight = typedArray.getDimensionPixelSize(R.styleable.MessageInput_inputButtonHeight, style.getDimension(R.dimen.input_button_height));
-        style.inputButtonMargin = typedArray.getDimensionPixelSize(R.styleable.MessageInput_inputButtonMargin, style.getDimension(R.dimen.input_button_margin));
 
         style.inputMaxLines = typedArray.getInt(R.styleable.MessageInput_inputMaxLines, DEFAULT_MAX_LINES);
         style.inputHint = typedArray.getString(R.styleable.MessageInput_inputHint);
@@ -263,20 +257,12 @@ class MessageInputStyle extends Style {
         return attachmentButtonHeight;
     }
 
-    protected int getAttachmentButtonMargin() {
-        return attachmentButtonMargin;
-    }
-
     protected int getEmoticonButtonWidth() {
         return emoticonButtonWidth;
     }
 
     protected int getEmoticonButtonHeight() {
         return emoticonButtonHeight;
-    }
-
-    protected int getEmoticonButtonMargin() {
-        return emoticonButtonMargin;
     }
 
     protected Drawable getInputButtonBackground() {
@@ -295,10 +281,6 @@ class MessageInputStyle extends Style {
         } else {
             return getDrawable(inputButtonIcon);
         }
-    }
-
-    protected int getInputButtonMargin() {
-        return inputButtonMargin;
     }
 
     protected int getInputButtonWidth() {

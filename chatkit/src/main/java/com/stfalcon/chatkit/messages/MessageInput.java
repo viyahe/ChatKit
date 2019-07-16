@@ -43,11 +43,12 @@ import java.lang.reflect.Field;
 public class MessageInput extends RelativeLayout
         implements View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
 
+    protected RelativeLayout container;
     protected EditText messageInput;
     protected Button messageSendButton;
     protected ImageButton emoticonButton;
     protected ImageButton attachmentButton;
-    protected Space sendButtonSpace, emoticonButtonSpace, attachmentButtonSpace;
+    protected Space emoticonButtonSpace, attachmentButtonSpace;
 
     private CharSequence input;
     private InputListener inputListener;
@@ -228,7 +229,6 @@ public class MessageInput extends RelativeLayout
         ViewCompat.setBackground(this.attachmentButton, style.getAttachmentButtonBackground());
 
         this.attachmentButtonSpace.setVisibility(style.showAttachmentButton() ? VISIBLE : GONE);
-        this.attachmentButtonSpace.getLayoutParams().width = style.getAttachmentButtonMargin();
 
         this.emoticonButton.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
         this.emoticonButton.setImageDrawable(style.getEmoticonButtonIcon());
@@ -237,12 +237,9 @@ public class MessageInput extends RelativeLayout
         ViewCompat.setBackground(this.emoticonButton, style.getEmoticonButtonBackground());
 
         this.emoticonButtonSpace.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
-        this.emoticonButtonSpace.getLayoutParams().width = style.getEmoticonButtonMargin();
 
         this.messageSendButton.setText(getContext().getString(R.string.send));
         ViewCompat.setBackground(messageSendButton, style.getInputButtonBackground());
-
-        this.sendButtonSpace.getLayoutParams().width = style.getInputButtonMargin();
 
         if (getPaddingLeft() == 0
                 && getPaddingRight() == 0
@@ -265,7 +262,6 @@ public class MessageInput extends RelativeLayout
         messageSendButton = (Button) findViewById(R.id.messageSendButton);
         emoticonButton = (ImageButton) findViewById(R.id.emoticonButton);
         attachmentButton = (ImageButton) findViewById(R.id.attachmentButton);
-        sendButtonSpace = (Space) findViewById(R.id.sendButtonSpace);
         emoticonButtonSpace = (Space) findViewById(R.id.emoticonButtonSpace);
         attachmentButtonSpace = (Space) findViewById(R.id.attachmentButtonSpace);
 

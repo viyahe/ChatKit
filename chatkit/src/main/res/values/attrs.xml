@@ -13,7 +13,6 @@
         <attr name="inputButtonDefaultIconPressedColor" format="color|reference"/>
         <attr name="inputButtonDefaultIconDisabledColor" format="color|reference"/>
 
-        <attr name="inputButtonMargin" format="dimension|reference"/>
         <attr name="inputButtonWidth" format="dimension|reference"/>
         <attr name="inputButtonHeight" format="dimension|reference"/>
 
