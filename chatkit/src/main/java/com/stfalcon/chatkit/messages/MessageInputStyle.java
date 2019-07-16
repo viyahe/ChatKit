@@ -37,6 +37,7 @@ class MessageInputStyle extends Style {
     private static final int DEFAULT_MAX_LINES = 5;
     private static final int DEFAULT_DELAY_TYPING_STATUS = 1500;
 
+    private boolean showEmoticonButton;
     private boolean showAttachmentButton;
 
     private int attachmentButtonBackground;
@@ -44,14 +45,28 @@ class MessageInputStyle extends Style {
     private int attachmentButtonDefaultBgPressedColor;
     private int attachmentButtonDefaultBgDisabledColor;
 
+    private int emoticonButtonBackground;
+    private int emoticonButtonDefaultBgColor;
+    private int emoticonButtonDefaultBgPressedColor;
+    private int emoticonButtonDefaultBgDisabledColor;
+
     private int attachmentButtonIcon;
     private int attachmentButtonDefaultIconColor;
     private int attachmentButtonDefaultIconPressedColor;
     private int attachmentButtonDefaultIconDisabledColor;
 
+    private int emoticonButtonIcon;
+    private int emoticonButtonDefaultIconColor;
+    private int emoticonButtonDefaultIconPressedColor;
+    private int emoticonButtonDefaultIconDisabledColor;
+
     private int attachmentButtonWidth;
     private int attachmentButtonHeight;
     private int attachmentButtonMargin;
+
+    private int emoticonButtonWidth;
+    private int emoticonButtonHeight;
+    private int emoticonButtonMargin;
 
     private int inputButtonBackground;
     private int inputButtonDefaultBgColor;
@@ -90,6 +105,7 @@ class MessageInputStyle extends Style {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageInput);
 
         style.showAttachmentButton = typedArray.getBoolean(R.styleable.MessageInput_showAttachmentButton, false);
+        style.showEmoticonButton = typedArray.getBoolean(R.styleable.MessageInput_showEmoticonButton, false);
 
         style.attachmentButtonBackground = typedArray.getResourceId(R.styleable.MessageInput_attachmentButtonBackground, -1);
         style.attachmentButtonDefaultBgColor = typedArray.getColor(R.styleable.MessageInput_attachmentButtonDefaultBgColor,
@@ -97,6 +113,14 @@ class MessageInputStyle extends Style {
         style.attachmentButtonDefaultBgPressedColor = typedArray.getColor(R.styleable.MessageInput_attachmentButtonDefaultBgPressedColor,
                 style.getColor(R.color.white_five));
         style.attachmentButtonDefaultBgDisabledColor = typedArray.getColor(R.styleable.MessageInput_attachmentButtonDefaultBgDisabledColor,
+                style.getColor(R.color.transparent));
+
+        style.emoticonButtonBackground = typedArray.getResourceId(R.styleable.MessageInput_emoticonButtonBackground, -1);
+        style.emoticonButtonDefaultBgColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultBgColor,
+                style.getColor(R.color.white_four));
+        style.emoticonButtonDefaultBgPressedColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultBgPressedColor,
+                style.getColor(R.color.white_five));
+        style.emoticonButtonDefaultBgDisabledColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultBgDisabledColor,
                 style.getColor(R.color.transparent));
 
         style.attachmentButtonIcon = typedArray.getResourceId(R.styleable.MessageInput_attachmentButtonIcon, -1);
@@ -107,9 +131,21 @@ class MessageInputStyle extends Style {
         style.attachmentButtonDefaultIconDisabledColor = typedArray.getColor(R.styleable.MessageInput_attachmentButtonDefaultIconDisabledColor,
                 style.getColor(R.color.cornflower_blue_light_40));
 
+        style.emoticonButtonIcon = typedArray.getResourceId(R.styleable.MessageInput_emoticonButtonIcon, -1);
+        style.emoticonButtonDefaultIconColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultIconColor,
+                style.getColor(R.color.cornflower_blue_two));
+        style.emoticonButtonDefaultIconPressedColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultIconPressedColor,
+                style.getColor(R.color.cornflower_blue_two_dark));
+        style.emoticonButtonDefaultIconDisabledColor = typedArray.getColor(R.styleable.MessageInput_emoticonButtonDefaultIconDisabledColor,
+                style.getColor(R.color.cornflower_blue_light_40));
+
         style.attachmentButtonWidth = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonWidth, style.getDimension(R.dimen.input_button_width));
         style.attachmentButtonHeight = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonHeight, style.getDimension(R.dimen.input_button_height));
         style.attachmentButtonMargin = typedArray.getDimensionPixelSize(R.styleable.MessageInput_attachmentButtonMargin, style.getDimension(R.dimen.input_button_margin));
+
+        style.emoticonButtonWidth = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonWidth, style.getDimension(R.dimen.input_button_width));
+        style.emoticonButtonHeight = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonHeight, style.getDimension(R.dimen.input_button_height));
+        style.emoticonButtonMargin = typedArray.getDimensionPixelSize(R.styleable.MessageInput_emoticonButtonMargin, style.getDimension(R.dimen.input_button_margin));
 
         style.inputButtonBackground = typedArray.getResourceId(R.styleable.MessageInput_inputButtonBackground, -1);
         style.inputButtonDefaultBgColor = typedArray.getColor(R.styleable.MessageInput_inputButtonDefaultBgColor,
@@ -179,6 +215,10 @@ class MessageInputStyle extends Style {
         return showAttachmentButton;
     }
 
+    protected boolean showEmoticonButton() {
+        return showEmoticonButton;
+    }
+
     protected Drawable getAttachmentButtonBackground() {
         if (attachmentButtonBackground == -1) {
             return getSelector(attachmentButtonDefaultBgColor, attachmentButtonDefaultBgPressedColor,
@@ -197,6 +237,24 @@ class MessageInputStyle extends Style {
         }
     }
 
+    protected Drawable getEmoticonButtonBackground() {
+        if (emoticonButtonBackground == -1) {
+            return getSelector(emoticonButtonDefaultBgColor, emoticonButtonDefaultBgPressedColor,
+                    emoticonButtonDefaultBgDisabledColor, R.drawable.mask);
+        } else {
+            return getDrawable(emoticonButtonBackground);
+        }
+    }
+
+    protected Drawable getEmoticonButtonIcon() {
+        if (emoticonButtonIcon == -1) {
+            return getSelector(emoticonButtonDefaultIconColor, emoticonButtonDefaultIconPressedColor,
+                    emoticonButtonDefaultIconDisabledColor, R.drawable.ic_add_attachment);
+        } else {
+            return getDrawable(emoticonButtonIcon);
+        }
+    }
+
     protected int getAttachmentButtonWidth() {
         return attachmentButtonWidth;
     }
@@ -207,6 +265,18 @@ class MessageInputStyle extends Style {
 
     protected int getAttachmentButtonMargin() {
         return attachmentButtonMargin;
+    }
+
+    protected int getEmoticonButtonWidth() {
+        return emoticonButtonWidth;
+    }
+
+    protected int getEmoticonButtonHeight() {
+        return emoticonButtonHeight;
+    }
+
+    protected int getEmoticonButtonMargin() {
+        return emoticonButtonMargin;
     }
 
     protected Drawable getInputButtonBackground() {

@@ -18,6 +18,8 @@
         <attr name="inputButtonHeight" format="dimension|reference"/>
 
         <attr name="showAttachmentButton" format="boolean"/>
+        <attr name="showEmoticonButton" format="boolean"/>
+
         <attr name="attachmentButtonBackground" format="reference"/>
         <attr name="attachmentButtonDefaultBgColor" format="color|reference"/>
         <attr name="attachmentButtonDefaultBgPressedColor" format="color|reference"/>
@@ -31,6 +33,20 @@
         <attr name="attachmentButtonMargin" format="dimension|reference"/>
         <attr name="attachmentButtonWidth" format="dimension|reference"/>
         <attr name="attachmentButtonHeight" format="dimension|reference"/>
+
+        <attr name="emoticonButtonBackground" format="reference"/>
+        <attr name="emoticonButtonDefaultBgColor" format="color|reference"/>
+        <attr name="emoticonButtonDefaultBgPressedColor" format="color|reference"/>
+        <attr name="emoticonButtonDefaultBgDisabledColor" format="color|reference"/>
+
+        <attr name="emoticonButtonIcon" format="reference"/>
+        <attr name="emoticonButtonDefaultIconColor" format="color|reference"/>
+        <attr name="emoticonButtonDefaultIconPressedColor" format="color|reference"/>
+        <attr name="emoticonButtonDefaultIconDisabledColor" format="color|reference"/>
+
+        <attr name="emoticonButtonMargin" format="dimension|reference"/>
+        <attr name="emoticonButtonWidth" format="dimension|reference"/>
+        <attr name="emoticonButtonHeight" format="dimension|reference"/>
 
         <attr name="inputMaxLines" format="integer"/>
         <attr name="inputHint" format="string"/>

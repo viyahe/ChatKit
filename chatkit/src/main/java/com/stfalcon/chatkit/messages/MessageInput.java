@@ -26,6 +26,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -43,13 +44,15 @@ public class MessageInput extends RelativeLayout
         implements View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
 
     protected EditText messageInput;
-    protected ImageButton messageSendButton;
+    protected Button messageSendButton;
+    protected ImageButton emoticonButton;
     protected ImageButton attachmentButton;
-    protected Space sendButtonSpace, attachmentButtonSpace;
+    protected Space sendButtonSpace, emoticonButtonSpace, attachmentButtonSpace;
 
     private CharSequence input;
     private InputListener inputListener;
     private AttachmentsListener attachmentsListener;
+    private EmoticonListener emoticonListener;
     private boolean isTyping;
     private TypingListener typingListener;
     private int delayTypingStatusMillis;
@@ -98,6 +101,15 @@ public class MessageInput extends RelativeLayout
     }
 
     /**
+     * Sets callback for 'emoticon' button.
+     *
+     * @param emoticonListener input callback
+     */
+    public void setEmoticonListener(EmoticonListener emoticonListener) {
+        this.emoticonListener = emoticonListener;
+    }
+
+    /**
      * Returns EditText for messages input
      *
      * @return EditText
@@ -109,9 +121,9 @@ public class MessageInput extends RelativeLayout
     /**
      * Returns `submit` button
      *
-     * @return ImageButton
+     * @return Button
      */
-    public ImageButton getButton() {
+    public Button getButton() {
         return messageSendButton;
     }
 
@@ -127,6 +139,8 @@ public class MessageInput extends RelativeLayout
             post(typingTimerRunnable);
         } else if (id == R.id.attachmentButton) {
             onAddAttachments();
+        } else if (id == R.id.emoticonButton) {
+            onOpenEmoticon();
         }
     }
 
@@ -181,6 +195,10 @@ public class MessageInput extends RelativeLayout
         if (attachmentsListener != null) attachmentsListener.onAddAttachments();
     }
 
+    private void onOpenEmoticon() {
+        if (emoticonListener != null) emoticonListener.onOpenEmoticon();
+    }
+
     private void init(Context context, AttributeSet attrs) {
         init(context);
         MessageInputStyle style = MessageInputStyle.parse(context, attrs);
@@ -203,10 +221,18 @@ public class MessageInput extends RelativeLayout
         this.attachmentButtonSpace.setVisibility(style.showAttachmentButton() ? VISIBLE : GONE);
         this.attachmentButtonSpace.getLayoutParams().width = style.getAttachmentButtonMargin();
 
-        this.messageSendButton.setImageDrawable(style.getInputButtonIcon());
-        this.messageSendButton.getLayoutParams().width = style.getInputButtonWidth();
-        this.messageSendButton.getLayoutParams().height = style.getInputButtonHeight();
+        this.emoticonButton.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+        this.emoticonButton.setImageDrawable(style.getEmoticonButtonIcon());
+        this.emoticonButton.getLayoutParams().width = style.getEmoticonButtonWidth();
+        this.emoticonButton.getLayoutParams().height = style.getEmoticonButtonHeight();
+        ViewCompat.setBackground(this.emoticonButton, style.getEmoticonButtonBackground());
+
+        this.emoticonButtonSpace.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+        this.emoticonButtonSpace.getLayoutParams().width = style.getEmoticonButtonMargin();
+
+        this.messageSendButton.setText(getContext().getString(R.string.send));
         ViewCompat.setBackground(messageSendButton, style.getInputButtonBackground());
+
         this.sendButtonSpace.getLayoutParams().width = style.getInputButtonMargin();
 
         if (getPaddingLeft() == 0
@@ -227,12 +253,15 @@ public class MessageInput extends RelativeLayout
         inflate(context, R.layout.view_message_input, this);
 
         messageInput = (EditText) findViewById(R.id.messageInput);
-        messageSendButton = (ImageButton) findViewById(R.id.messageSendButton);
+        messageSendButton = (Button) findViewById(R.id.messageSendButton);
+        emoticonButton = (ImageButton) findViewById(R.id.emoticonButton);
         attachmentButton = (ImageButton) findViewById(R.id.attachmentButton);
         sendButtonSpace = (Space) findViewById(R.id.sendButtonSpace);
+        emoticonButtonSpace = (Space) findViewById(R.id.emoticonButtonSpace);
         attachmentButtonSpace = (Space) findViewById(R.id.attachmentButtonSpace);
 
         messageSendButton.setOnClickListener(this);
+        emoticonButton.setOnClickListener(this);
         attachmentButton.setOnClickListener(this);
         messageInput.addTextChangedListener(this);
         messageInput.setText("");
@@ -268,6 +297,10 @@ public class MessageInput extends RelativeLayout
         this.typingListener = typingListener;
     }
 
+    public Button getMessageSendButton() {
+        return messageSendButton;
+    }
+
     /**
      * Interface definition for a callback to be invoked when user pressed 'submit' button
      */
@@ -291,6 +324,17 @@ public class MessageInput extends RelativeLayout
          * Fires when user presses 'add' button.
          */
         void onAddAttachments();
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when user presses 'emoticon' button
+     */
+    public interface EmoticonListener {
+
+        /**
+         * Fires when user presses 'add' button.
+         */
+        void onOpenEmoticon();
     }
 
     /**
