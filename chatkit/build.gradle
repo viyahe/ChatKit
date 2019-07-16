@@ -28,4 +28,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.google.android:flexbox:$flexboxVersion"
+    implementation 'com.vanniktech:emoji-google:0.6.0'
 }

@@ -127,6 +127,15 @@ public class MessageInput extends RelativeLayout
         return messageSendButton;
     }
 
+    /**
+     * Returns `emoticon` button
+     *
+     * @return Button
+     */
+    public ImageButton getEmoticonButton() {
+        return emoticonButton;
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
