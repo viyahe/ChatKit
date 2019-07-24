@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true" />
 
-    <android.support.v4.widget.Space
+    <androidx.legacy.widget.Space
         android:id="@id/emoticonButtonSpace"
         android:layout_width="4dp"
         android:layout_height="0dp"
@@ -25,7 +25,7 @@
         android:layout_toEndOf="@id/emoticonButtonSpace"
         android:layout_toRightOf="@id/emoticonButtonSpace" />
 
-    <android.support.v4.widget.Space
+    <androidx.legacy.widget.Space
         android:id="@id/attachmentButtonSpace"
         android:layout_width="8dp"
         android:layout_height="0dp"
