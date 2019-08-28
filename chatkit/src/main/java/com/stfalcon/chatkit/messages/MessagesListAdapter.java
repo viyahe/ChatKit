@@ -114,11 +114,41 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Wrapper wrapper = items.get(position);
-        holders.bind(holder, wrapper.item, wrapper.isSelected, imageLoader,
+        Object item = wrapper.item;
+
+        holders.bind(holder, item, wrapper.isSelected, imageLoader,
                 getMessageClickListener(wrapper),
                 getMessageLongClickListener(wrapper),
                 dateHeadersFormatter,
                 viewClickListenersArray);
+
+        // Group by timestamp
+        if (item instanceof IMessage) {
+            if (position > 0) {
+                Wrapper nextWrapper = items.get(position - 1);
+                Object nextItem = nextWrapper.item;
+
+                if (nextItem instanceof IMessage) {
+                    IMessage currentMessageItem = (IMessage) item;
+                    IMessage nextMessageItem = (IMessage) nextItem;
+
+                    MessageHolders.BaseMessageViewHolder messageViewHolder = (MessageHolders.BaseMessageViewHolder) holder;
+                    View currentMessageTime = messageViewHolder.itemView.findViewById(R.id.messageTime);
+
+                    boolean isSame = DateFormatter.isSameMin(nextMessageItem.getCreatedAt(), currentMessageItem.getCreatedAt());
+                    if (currentMessageTime != null) {
+                        currentMessageTime.setVisibility(isSame ? View.GONE : View.VISIBLE);
+                    }
+                }
+            } else {
+                MessageHolders.BaseMessageViewHolder messageViewHolder = (MessageHolders.BaseMessageViewHolder) holder;
+                View currentMessageTime = messageViewHolder.itemView.findViewById(R.id.messageTime);
+
+                if (currentMessageTime != null) {
+                    currentMessageTime.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override

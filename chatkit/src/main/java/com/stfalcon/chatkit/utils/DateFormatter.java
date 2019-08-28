@@ -36,6 +36,27 @@ public final class DateFormatter {
                 .format(date);
     }
 
+    public static boolean isSameMin(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            throw new IllegalArgumentException("Dates must not be null");
+        }
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return isSameMin(cal1, cal2);
+    }
+
+    public static boolean isSameMin(Calendar cal1, Calendar cal2) {
+        if (cal1 == null || cal2 == null) {
+            throw new IllegalArgumentException("Dates must not be null");
+        }
+
+        return (isSameDay(cal1, cal2) &&
+                cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY) &&
+                cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE));
+    }
+
     public static boolean isSameDay(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
             throw new IllegalArgumentException("Dates must not be null");
