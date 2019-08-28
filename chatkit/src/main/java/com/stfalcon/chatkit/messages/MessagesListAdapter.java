@@ -585,10 +585,13 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     @SuppressWarnings("unchecked")
     private boolean isPreviousSameDate(int position, Date dateToCompare) {
         if (items.size() <= position) return false;
+
         if (items.get(position).item instanceof IMessage) {
             Date previousPositionDate = ((MESSAGE) items.get(position).item).getCreatedAt();
             return DateFormatter.isSameDay(dateToCompare, previousPositionDate);
-        } else return false;
+        }
+
+        return items.get(position).item instanceof Date;
     }
 
     @SuppressWarnings("unchecked")
