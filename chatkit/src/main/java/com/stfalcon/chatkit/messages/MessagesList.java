@@ -80,6 +80,7 @@ public class MessagesList extends RecyclerView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, reverseLayout);
+        layoutManager.setStackFromEnd(true);
 
         setItemAnimator(itemAnimator);
         setLayoutManager(layoutManager);
