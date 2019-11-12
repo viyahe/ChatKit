@@ -385,6 +385,10 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         return items.isEmpty();
     }
 
+    public List<Wrapper> getItems() {
+        return items;
+    }
+
     /**
      * Clears the messages list. With notifyDataSetChanged
      */
