@@ -19,10 +19,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 
-import androidx.annotation.DimenRes;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.widget.AppCompatImageView;
+import android.support.annotation.DimenRes;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 /**

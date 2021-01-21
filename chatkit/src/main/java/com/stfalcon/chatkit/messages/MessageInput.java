@@ -19,8 +19,7 @@ package com.stfalcon.chatkit.messages;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-
-import androidx.core.view.ViewCompat;
+import android.support.v4.view.ViewCompat;
 import android.widget.Button;
 import android.widget.Space;
 import android.text.Editable;
