@@ -20,6 +20,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import androidx.core.view.ViewCompat;
+
+import android.widget.Button;
 import android.widget.Space;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,19 +39,35 @@ import java.lang.reflect.Field;
 
 /**
  * Component for input outcoming messages
- */
+*/
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class MessageInput extends RelativeLayout
-        implements View.OnClickListener, TextWatcher {
+        implements View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
 
+    protected RelativeLayout container;
     protected EditText messageInput;
-    protected ImageButton messageSendButton;
+    protected Button messageSendButton;
+    protected ImageButton emoticonButton;
     protected ImageButton attachmentButton;
-    protected Space sendButtonSpace, attachmentButtonSpace;
+    protected Space emoticonButtonSpace, attachmentButtonSpace;
 
     private CharSequence input;
     private InputListener inputListener;
     private AttachmentsListener attachmentsListener;
+    private EmoticonListener emoticonListener;
+    private boolean isTyping;
+    private TypingListener typingListener;
+    private int delayTypingStatusMillis;
+    private Runnable typingTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isTyping) {
+                isTyping = false;
+                if (typingListener != null) typingListener.onStopTyping();
+            }
+        }
+    };
+    private boolean lastFocus;
 
     public MessageInput(Context context) {
         super(context);
@@ -85,6 +103,15 @@ public class MessageInput extends RelativeLayout
     }
 
     /**
+     * Sets callback for 'emoticon' button.
+     *
+     * @param emoticonListener input callback
+     */
+    public void setEmoticonListener(EmoticonListener emoticonListener) {
+        this.emoticonListener = emoticonListener;
+    }
+
+    /**
      * Returns EditText for messages input
      *
      * @return EditText
@@ -96,10 +123,19 @@ public class MessageInput extends RelativeLayout
     /**
      * Returns `submit` button
      *
-     * @return ImageButton
+     * @return Button
      */
-    public ImageButton getButton() {
+    public Button getButton() {
         return messageSendButton;
+    }
+
+    /**
+     * Returns `emoticon` button
+     *
+     * @return Button
+     */
+    public ImageButton getEmoticonButton() {
+        return emoticonButton;
     }
 
     @Override
@@ -110,8 +146,12 @@ public class MessageInput extends RelativeLayout
             if (isSubmitted) {
                 messageInput.setText("");
             }
+            removeCallbacks(typingTimerRunnable);
+            post(typingTimerRunnable);
         } else if (id == R.id.attachmentButton) {
             onAddAttachments();
+        } else if (id == R.id.emoticonButton) {
+            onOpenEmoticon();
         }
     }
 
@@ -123,6 +163,14 @@ public class MessageInput extends RelativeLayout
     public void onTextChanged(CharSequence s, int start, int count, int after) {
         input = s;
         messageSendButton.setEnabled(input.length() > 0);
+        if (s.length() > 0) {
+            if (!isTyping) {
+                isTyping = true;
+                if (typingListener != null) typingListener.onStartTyping();
+            }
+            removeCallbacks(typingTimerRunnable);
+            postDelayed(typingTimerRunnable, delayTypingStatusMillis);
+        }
     }
 
     /**
@@ -142,12 +190,24 @@ public class MessageInput extends RelativeLayout
         //do nothing
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (lastFocus && !hasFocus && typingListener != null) {
+            typingListener.onStopTyping();
+        }
+        lastFocus = hasFocus;
+    }
+
     private boolean onSubmit() {
         return inputListener != null && inputListener.onSubmit(input);
     }
 
     private void onAddAttachments() {
         if (attachmentsListener != null) attachmentsListener.onAddAttachments();
+    }
+
+    private void onOpenEmoticon() {
+        if (emoticonListener != null) emoticonListener.onOpenEmoticon();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -170,13 +230,17 @@ public class MessageInput extends RelativeLayout
         ViewCompat.setBackground(this.attachmentButton, style.getAttachmentButtonBackground());
 
         this.attachmentButtonSpace.setVisibility(style.showAttachmentButton() ? VISIBLE : GONE);
-        this.attachmentButtonSpace.getLayoutParams().width = style.getAttachmentButtonMargin();
 
-        this.messageSendButton.setImageDrawable(style.getInputButtonIcon());
-        this.messageSendButton.getLayoutParams().width = style.getInputButtonWidth();
-        this.messageSendButton.getLayoutParams().height = style.getInputButtonHeight();
+        this.emoticonButton.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+        this.emoticonButton.setImageDrawable(style.getEmoticonButtonIcon());
+        this.emoticonButton.getLayoutParams().width = style.getEmoticonButtonWidth();
+        this.emoticonButton.getLayoutParams().height = style.getEmoticonButtonHeight();
+        ViewCompat.setBackground(this.emoticonButton, style.getEmoticonButtonBackground());
+
+        this.emoticonButtonSpace.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+
+        this.messageSendButton.setText(getContext().getString(R.string.send));
         ViewCompat.setBackground(messageSendButton, style.getInputButtonBackground());
-        this.sendButtonSpace.getLayoutParams().width = style.getInputButtonMargin();
 
         if (getPaddingLeft() == 0
                 && getPaddingRight() == 0
@@ -189,21 +253,25 @@ public class MessageInput extends RelativeLayout
                     style.getInputDefaultPaddingBottom()
             );
         }
+        this.delayTypingStatusMillis = style.getDelayTypingStatus();
     }
 
     private void init(Context context) {
         inflate(context, R.layout.view_message_input, this);
 
         messageInput = (EditText) findViewById(R.id.messageInput);
-        messageSendButton = (ImageButton) findViewById(R.id.messageSendButton);
+        messageSendButton = (Button) findViewById(R.id.messageSendButton);
+        emoticonButton = (ImageButton) findViewById(R.id.emoticonButton);
         attachmentButton = (ImageButton) findViewById(R.id.attachmentButton);
-        sendButtonSpace = (Space) findViewById(R.id.sendButtonSpace);
+        emoticonButtonSpace = (Space) findViewById(R.id.emoticonButtonSpace);
         attachmentButtonSpace = (Space) findViewById(R.id.attachmentButtonSpace);
 
         messageSendButton.setOnClickListener(this);
+        emoticonButton.setOnClickListener(this);
         attachmentButton.setOnClickListener(this);
         messageInput.addTextChangedListener(this);
         messageInput.setText("");
+        messageInput.setOnFocusChangeListener(this);
     }
 
     private void setCursor(Drawable drawable) {
@@ -231,6 +299,14 @@ public class MessageInput extends RelativeLayout
         }
     }
 
+    public void setTypingListener(TypingListener typingListener) {
+        this.typingListener = typingListener;
+    }
+
+    public Button getMessageSendButton() {
+        return messageSendButton;
+    }
+
     /**
      * Interface definition for a callback to be invoked when user pressed 'submit' button
      */
@@ -254,5 +330,33 @@ public class MessageInput extends RelativeLayout
          * Fires when user presses 'add' button.
          */
         void onAddAttachments();
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when user presses 'emoticon' button
+     */
+    public interface EmoticonListener {
+
+        /**
+         * Fires when user presses 'add' button.
+         */
+        void onOpenEmoticon();
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when user typing
+     */
+    public interface TypingListener {
+
+        /**
+         * Fires when user presses start typing
+         */
+        void onStartTyping();
+
+        /**
+         * Fires when user presses stop typing
+         */
+        void onStopTyping();
+
     }
 }
