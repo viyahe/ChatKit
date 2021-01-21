@@ -560,13 +560,13 @@ public class MessageHolders {
             extends BaseOutcomingMessageViewHolder<MESSAGE> {
 
         protected ViewGroup bubble;
-        protected TextView text;
+        protected TextView text, messageTextEmoji;
 
         public OutcomingTextMessageViewHolder(View itemView) {
             super(itemView);
             bubble = (ViewGroup) itemView.findViewById(R.id.bubble);
             text = (TextView) itemView.findViewById(R.id.messageText);
-            messageTextEmoji = (TextView) item.findViewById(R.id.messageTextEmoji);
+            messageTextEmoji = (TextView) itemView.findViewById(R.id.messageTextEmoji);
         }
 
         @Override
