@@ -566,7 +566,7 @@ public class MessageHolders {
             super(itemView);
             bubble = (ViewGroup) itemView.findViewById(R.id.bubble);
             text = (TextView) itemView.findViewById(R.id.messageText);
-            messageTextEmoji = (TextView) item.findViewById(R.id.messageTextEmoji);
+            messageTextEmoji = (TextView) itemView.findViewById(R.id.messageTextEmoji);
         }
 
         @Override
