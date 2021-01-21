@@ -560,7 +560,7 @@ public class MessageHolders {
             extends BaseOutcomingMessageViewHolder<MESSAGE> {
 
         protected ViewGroup bubble;
-        protected TextView text;
+        protected TextView text, messageTextEmoji;
 
         public OutcomingTextMessageViewHolder(View itemView) {
             super(itemView);
