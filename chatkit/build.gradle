@@ -6,7 +6,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "0.2.2"
@@ -35,14 +35,14 @@ publish {
 }
 
 ext {
-    supportVersion = '26.0.0-beta1'
+    supportVersion = '28.0.1'
     flexboxVersion = '0.2.5'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "com.android.support:appcompat-v7:$supportVersion"
-    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:design:28.0.0"
     implementation "com.google.android:flexbox:$flexboxVersion"
 }
