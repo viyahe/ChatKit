@@ -566,6 +566,7 @@ public class MessageHolders {
             super(itemView);
             bubble = (ViewGroup) itemView.findViewById(R.id.bubble);
             text = (TextView) itemView.findViewById(R.id.messageText);
+            messageTextEmoji = (TextView) item.findViewById(R.id.messageTextEmoji);
         }
 
         @Override
@@ -577,6 +578,10 @@ public class MessageHolders {
 
             if (text != null) {
                 text.setText(message.getText());
+            }
+
+            if(messageTextEmoji != null){
+                messageTextEmoji.setText(message.getText());
             }
         }
 
@@ -598,6 +603,15 @@ public class MessageHolders {
                 text.setAutoLinkMask(style.getTextAutoLinkMask());
                 text.setLinkTextColor(style.getOutcomingTextLinkColor());
                 configureLinksBehavior(text);
+            }
+
+            if (messageTextEmoji != null) {
+                messageTextEmoji.setTextColor(style.getOutcomingTextColor());
+                messageTextEmoji.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.getOutcomingTextSize());
+                messageTextEmoji.setTypeface(messageTextEmoji.getTypeface(), style.getOutcomingTextStyle());
+                messageTextEmoji.setAutoLinkMask(style.getTextAutoLinkMask());
+                messageTextEmoji.setLinkTextColor(style.getOutcomingTextLinkColor());
+                configureLinksBehavior(messageTextEmoji);
             }
         }
     }
