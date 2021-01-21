@@ -18,8 +18,8 @@ package com.stfalcon.chatkit.dialogs;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import androidx.annotation.LayoutRes;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -19,8 +19,8 @@ package com.stfalcon.chatkit.messages;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.core.view.ViewCompat;
 
+import android.support.v4.view.ViewCompat;
 import android.widget.Button;
 import android.widget.Space;
 import android.text.Editable;
@@ -150,9 +150,10 @@ public class MessageInput extends RelativeLayout
             post(typingTimerRunnable);
         } else if (id == R.id.attachmentButton) {
             onAddAttachments();
-        } else if (id == R.id.emoticonButton) {
-            onOpenEmoticon();
         }
+//        else if (id == R.id.emoticonButton) {
+//            onOpenEmoticon();
+//        }
     }
 
     /**
@@ -231,15 +232,15 @@ public class MessageInput extends RelativeLayout
 
         this.attachmentButtonSpace.setVisibility(style.showAttachmentButton() ? VISIBLE : GONE);
 
-        this.emoticonButton.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
-        this.emoticonButton.setImageDrawable(style.getEmoticonButtonIcon());
-        this.emoticonButton.getLayoutParams().width = style.getEmoticonButtonWidth();
-        this.emoticonButton.getLayoutParams().height = style.getEmoticonButtonHeight();
-        ViewCompat.setBackground(this.emoticonButton, style.getEmoticonButtonBackground());
-
-        this.emoticonButtonSpace.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
-
-        this.messageSendButton.setText(getContext().getString(R.string.send));
+//        this.emoticonButton.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+//        this.emoticonButton.setImageDrawable(style.getEmoticonButtonIcon());
+//        this.emoticonButton.getLayoutParams().width = style.getEmoticonButtonWidth();
+//        this.emoticonButton.getLayoutParams().height = style.getEmoticonButtonHeight();
+//        ViewCompat.setBackground(this.emoticonButton, style.getEmoticonButtonBackground());
+//
+//        this.emoticonButtonSpace.setVisibility(style.showEmoticonButton() ? VISIBLE : GONE);
+//
+//        this.messageSendButton.setText(getContext().getString(R.string.send));
         ViewCompat.setBackground(messageSendButton, style.getInputButtonBackground());
 
         if (getPaddingLeft() == 0
@@ -253,7 +254,7 @@ public class MessageInput extends RelativeLayout
                     style.getInputDefaultPaddingBottom()
             );
         }
-        this.delayTypingStatusMillis = style.getDelayTypingStatus();
+//        this.delayTypingStatusMillis = style.getDelayTypingStatus();
     }
 
     private void init(Context context) {
@@ -261,9 +262,9 @@ public class MessageInput extends RelativeLayout
 
         messageInput = (EditText) findViewById(R.id.messageInput);
         messageSendButton = (Button) findViewById(R.id.messageSendButton);
-        emoticonButton = (ImageButton) findViewById(R.id.emoticonButton);
+//        emoticonButton = (ImageButton) findViewById(R.id.emoticonButton);
         attachmentButton = (ImageButton) findViewById(R.id.attachmentButton);
-        emoticonButtonSpace = (Space) findViewById(R.id.emoticonButtonSpace);
+//        emoticonButtonSpace = (Space) findViewById(R.id.emoticonButtonSpace);
         attachmentButtonSpace = (Space) findViewById(R.id.attachmentButtonSpace);
 
         messageSendButton.setOnClickListener(this);
